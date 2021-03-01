@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public float damage = 10.0f;
+    public int damage = 10;
     public float range = 100.0f;
 
     public Camera fpsCam;
@@ -25,11 +25,56 @@ public class PlayerShooting : MonoBehaviour
         {
             Debug.Log(hit.transform.name);
 
-            EnemyTarget target = hit.transform.GetComponent<EnemyTarget>();
+            EnemyTarget target = hit.transform.root.GetComponent<EnemyTarget>();
 
             if (target != null)
             {
-                target.TakeDamage(damage);
+                switch(hit.transform.name)
+                {
+                    case "Head":
+                        target.TakeDamage(damage * 2);
+                        break;
+
+                    case "Spine2":
+                        target.TakeDamage(damage * 2);
+                        break;
+
+                    case "LeftUpLeg":
+                        target.TakeDamage(damage + 2);
+                        break;
+                    
+                    case "LeftLeg":
+                        target.TakeDamage(damage + 2);
+                        break;
+
+                    case "RightUpLeg":
+                        target.TakeDamage(damage + 2);
+                        break;
+
+                    case "RightLeg":
+                        target.TakeDamage(damage + 2);
+                        break;
+
+                    case "LeftArm":
+                        target.TakeDamage(damage + 2);
+                        break;
+
+                    case "LeftForeArm":
+                        target.TakeDamage(damage - 4);
+                        break;
+
+                    case "RightArm":
+                        target.TakeDamage(damage + 2);
+                        break;
+
+                    case "RightForeArm":
+                        target.TakeDamage(damage - 4);
+                        break;
+
+                    default:
+                        target.TakeDamage(damage);
+                        break;
+                }
             }
         }
     }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
-    public float turnSpeed = 1000.0f;
+    public float mouseSensitivity = 1000.0f;
 
     public GameObject target;
 
@@ -20,19 +20,13 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         // Get the mouse inputs
-        rotY -= Input.GetAxis("Mouse X") * turnSpeed * Time.deltaTime;
-        rotX -= Input.GetAxis("Mouse Y") * turnSpeed * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Clamp the vertical rotation
-        rotX = Mathf.Clamp(rotX, minTurnAngle, maxTurnAngle + 25.0f);
+        rotX -= mouseY;
+        rotX = Mathf.Clamp(rotX, -90f, 90f);
 
-        // Clamp the horizontal rotation
-        rotY = Mathf.Clamp(rotY, minTurnAngle, maxTurnAngle + 90.0f);
-
-        // Rotate the camera
-        transform.localRotation = Quaternion.Euler(rotX, -rotY, 0);
-
-        // Move the camera position
-        transform.position = target.transform.position + new Vector3(0, 3.5f, 0);
+        transform.localRotation = Quaternion.Euler(rotX, 0f, 0f);
+        target.transform.Rotate(Vector3.up * mouseX);
     }
 }

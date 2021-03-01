@@ -21,6 +21,8 @@ public class Shoot : MonoBehaviour
             newBall.transform.position = transform.position;
             newBall.GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 40), ForceMode.Impulse);
             newBall.GetComponent<Rigidbody>().useGravity = true;
+
+            Destroy(newBall, 5.0f);
         }
     }
 }

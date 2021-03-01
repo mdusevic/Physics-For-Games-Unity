@@ -13,12 +13,15 @@ public class Player : MonoBehaviour
 
     public float pushPower = 2.0f;
     public float speed = 18.0f;
-    public float jumpSpeed = 15.0f;
-    public float gravity = 30.0f;
+    public float gravity = -30.0f;
+    public float jumpHeight = 3.0f;
 
-    public float rotationSpeed = 300.0f;
-    private Vector3 rotation;
-    private Vector3 moveDirection = Vector3.zero;
+    public float groundDistance = 0.4f;
+    public Transform groundCheck;
+    public LayerMask groundMask;
+
+    private Vector3 velocity;
+    private bool isGrounded;
 
     // Start is called before the first frame update
     void Start()
@@ -31,20 +34,28 @@ public class Player : MonoBehaviour
     // Update is called once per frames
     void Update()
     {
-        this.rotation = new Vector3(0, Input.GetAxisRaw("Horizontal") * rotationSpeed * Time.deltaTime, 0);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        Vector3 move = new Vector3(0, 0, Input.GetAxisRaw("Vertical") * Time.deltaTime);
-        move = this.transform.TransformDirection(move);
-
-        if (controller.isGrounded && Input.GetButton("Jump"))
+        if (isGrounded && velocity.y < 0)
         {
-            moveDirection.y = jumpSpeed;
+            velocity.y = -2f;
         }
-        moveDirection.y -= gravity * Time.deltaTime;
-        controller.Move(moveDirection * Time.deltaTime);
 
-        controller.Move(move * speed);
-        this.transform.Rotate(this.rotation);
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
+
+        Vector3 move = transform.right * x + transform.forward * z; ;
+
+        controller.Move(move * speed * Time.deltaTime);
+
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+
+        velocity.y += gravity * Time.deltaTime;
+
+        controller.Move(velocity * Time.deltaTime);
     }
 
     private void OnControllerColliderHit(ControllerColliderHit hit)

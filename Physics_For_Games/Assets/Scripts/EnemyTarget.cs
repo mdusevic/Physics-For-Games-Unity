@@ -1,23 +1,51 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyTarget : MonoBehaviour
 {
-    public float health = 50.0f;
+    Rigidbody rb;
+    public int maxHealth = 100;
+    public int health;
 
-    public void TakeDamage(float amount)
+    public HealthBar healthBar;
+
+    private bool healthBarCreated = false;
+
+    void Start()
     {
-        health -= amount;
+        rb = GetComponent<Rigidbody>();
+        health = maxHealth;
+    }
 
-        if (health <= 0.0f)
+    void Update()
+    {
+        if (healthBar != null && !healthBarCreated)
         {
+            healthBar.SetMaxHealth(maxHealth);
+            healthBarCreated = true;
+        }
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+
+        healthBar.SetHealth(health);
+
+        if (health <= 0)
+        {
+            health = 0;
             Die();
         }
     }
 
     void Die()
     {
-        Destroy(gameObject);
+        Destroy(healthBar.gameObject);
+        GetComponent<Animator>().enabled = false;
+        GetComponent<Ragdoll>().RagdollOn = true;
+        Destroy(gameObject, 4.0f);
     }
 }

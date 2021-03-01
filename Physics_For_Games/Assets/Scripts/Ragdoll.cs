@@ -11,7 +11,11 @@ public class Ragdoll : MonoBehaviour
 
     public bool RagdollOn
     {
-        get { return !animator.enabled; }
+        get
+        { 
+            return !animator.enabled; 
+        }
+
         set
         {
             animator.enabled = !value;
@@ -22,7 +26,6 @@ public class Ragdoll : MonoBehaviour
         }
     }
 
-
     // Start is called before the first frame update
     void Start()
     {
@@ -31,11 +34,5 @@ public class Ragdoll : MonoBehaviour
         {
             r.isKinematic = true;
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }
