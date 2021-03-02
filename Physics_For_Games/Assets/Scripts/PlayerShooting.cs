@@ -8,6 +8,7 @@ public class PlayerShooting : MonoBehaviour
     public float range = 100.0f;
 
     public Camera fpsCam;
+    public ParticleSystem muzzleFlash;
 
     // Update is called once per frame
     void Update()
@@ -20,10 +21,12 @@ public class PlayerShooting : MonoBehaviour
 
     void Shoot()
     {
+        muzzleFlash.Play();
+
         RaycastHit hit;
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range))
         {
-            Debug.Log(hit.transform.name);
+            //Debug.Log(hit.transform.name);
 
             EnemyTarget target = hit.transform.root.GetComponent<EnemyTarget>();
 
