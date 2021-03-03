@@ -12,6 +12,7 @@ public class EnemyTarget : MonoBehaviour
     public HealthBar healthBar;
 
     private bool healthBarCreated = false;
+    private bool isDead = false;
 
     void Start()
     {
@@ -30,14 +31,18 @@ public class EnemyTarget : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        health -= damage;
-
-        healthBar.SetHealth(health);
-
-        if (health <= 0)
+        if (!isDead)
         {
-            health = 0;
-            Die();
+            health -= damage;
+
+            healthBar.SetHealth(health);
+
+            if (health <= 0)
+            {
+                health = 0;
+                isDead = true;
+                Die();
+            }
         }
     }
 

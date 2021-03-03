@@ -6,7 +6,8 @@ public class Grenade : MonoBehaviour
 {
     public float delay = 3.0f;
     public float radius = 5.0f;
-    public float force = 700.0f;
+    public float upforce = 1.0f;
+    public float force = 200.0f;
 
     public GameObject explosionEffect;
 
@@ -42,7 +43,16 @@ public class Grenade : MonoBehaviour
             Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                rb.AddExplosionForce(force, transform.position, radius);
+                rb.AddExplosionForce(force, transform.position, radius, upforce, ForceMode.Impulse);
+            }
+
+            EnemyTarget nearbyTarget = nearbyObject.transform.root.GetComponent<EnemyTarget>();
+            if (nearbyTarget != null)
+            {
+                float proximity = (transform.position - nearbyTarget.transform.position).magnitude;
+                int explosiveEffect = 1 - (int)(proximity / radius);
+
+                nearbyTarget.TakeDamage(explosiveEffect * 2);
             }
         }
 
