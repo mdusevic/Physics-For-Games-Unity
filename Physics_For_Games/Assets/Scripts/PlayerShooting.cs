@@ -37,7 +37,7 @@ public class PlayerShooting : MonoBehaviour
                         break;
 
                     case "Spine2":
-                        target.TakeDamage(damage * 3);
+                        target.TakeDamage(damage * 2);
                         break;
 
                     case "LeftUpLeg":

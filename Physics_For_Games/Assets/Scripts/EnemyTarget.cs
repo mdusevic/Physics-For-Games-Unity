@@ -5,18 +5,14 @@ using UnityEngine.UI;
 
 public enum MovementType
 {
-    MoveLefttoRight,
+    MoveRightToLeft,
+    MoveLeftToRight,
     Idle
 };
 
 public class EnemyTarget : MonoBehaviour
 {
-    public MovementType type;
-    private Vector3 startPos;
-    public Vector3 endPos;
-    public float endPoint;
-
-    public Transform endTarget;
+    public MovementType type = MovementType.Idle;
 
     Rigidbody rb;
     CharacterController controller;
@@ -25,6 +21,10 @@ public class EnemyTarget : MonoBehaviour
     public int health;
     public float timeToColor = 0.5f;
     public float speed = 10.0f;
+
+    public Transform startPos;
+    public Transform endPos;
+    private Transform target;
 
     public HealthBar healthBar;
     public GameObject healthCanvas;
@@ -41,7 +41,7 @@ public class EnemyTarget : MonoBehaviour
         controller = GetComponent<CharacterController>();
         health = maxHealth;
         healthCanvas.SetActive(true);
-        startPos = transform.position;
+        target = endPos;
     }
 
     void Update()
@@ -52,14 +52,34 @@ public class EnemyTarget : MonoBehaviour
             healthBarCreated = true;
         }
 
-        if (type == MovementType.MoveLefttoRight)
+        if (type == MovementType.MoveRightToLeft && !isDead)
         {
-            transform.position = Vector3.MoveTowards(transform.position, endTarget.position, speed * Time.deltaTime);
+            if (transform.position.z <= endPos.position.z)
+            {
+                target = startPos;
+            }
+            else if (transform.position.z >= startPos.position.z )
+            {
+                target = endPos;
+            }
 
-            //if (transform.position.z > endPos.z)
-            //{
-            //    controller.Move(Vector3.back * speed * Time.deltaTime);
-            //}
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            transform.LookAt(target.position);
+        }
+
+        if (type == MovementType.MoveLeftToRight && !isDead)
+        {
+            if (transform.position.z == endPos.position.z)
+            {
+                target = startPos;
+            }
+            else if (transform.position.z == startPos.position.z)
+            {
+                target = endPos;
+            }
+
+            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+            transform.LookAt(target.position);
         }
     }
 
