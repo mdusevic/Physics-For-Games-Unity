@@ -5,8 +5,14 @@ using UnityEngine;
 public class MovingPlatform : MonoBehaviour
 {
     public GameObject player;
+    Animator animator;
 
     private bool playerOnPlatform = false;
+
+    void Start()
+    {
+        animator = GetComponent<Animator>();
+    }
 
     private void FixedUpdate()
     {
@@ -18,12 +24,13 @@ public class MovingPlatform : MonoBehaviour
         if (playerOnPlatform)
         {
             player.transform.SetParent(gameObject.transform);
+            animator.enabled = true;
         }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == player && !playerOnPlatform)
         {
             playerOnPlatform = true;
         }
@@ -31,9 +38,17 @@ public class MovingPlatform : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject == player)
+        if (other.gameObject == player && playerOnPlatform)
         {
             playerOnPlatform = false;
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.name == "Terrain")
+        {
+            animator.enabled = false;
         }
     }
 }

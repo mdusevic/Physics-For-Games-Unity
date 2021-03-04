@@ -46,13 +46,13 @@ public class Grenade : MonoBehaviour
                 rb.AddExplosionForce(force, transform.position, radius, upforce, ForceMode.Impulse);
             }
 
-            EnemyTarget nearbyTarget = nearbyObject.transform.root.GetComponent<EnemyTarget>();
+            EnemyTarget nearbyTarget = nearbyObject.transform.root.gameObject.GetComponent<EnemyTarget>();
             if (nearbyTarget != null)
             {
                 float proximity = (transform.position - nearbyTarget.transform.position).magnitude;
                 int explosiveEffect = 1 - (int)(proximity / radius);
 
-                nearbyTarget.TakeDamage(explosiveEffect * 2);
+                nearbyTarget.TakeDamage(explosiveEffect * 7);
             }
         }
 

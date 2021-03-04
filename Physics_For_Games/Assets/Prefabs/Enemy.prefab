@@ -223,7 +223,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2821151459238250313}
   - component: {fileID: 5308826485718264371}
-  - component: {fileID: 7087551461011303492}
   - component: {fileID: 7087551461011303494}
   - component: {fileID: 7087551461011303493}
   m_Layer: 0
@@ -269,24 +268,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!143 &7087551461011303492
-CharacterController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1260418106307540314}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Height: 1.82
-  m_Radius: 0.2
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.95, z: 0}
 --- !u!114 &7087551461011303494
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,9 +280,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99e548735a4d97740848212793537f66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 1
+  endPos: {x: 0, y: 0, z: 0}
+  endPoint: 0
+  endTarget: {fileID: 0}
   maxHealth: 100
   health: 0
+  timeToColor: 0.15
+  speed: 10
   healthBar: {fileID: 7087551462055816993}
+  healthCanvas: {fileID: 7087551462013839809}
+  jointsMaterial: {fileID: -2477152504647978758, guid: 2dc526a87c49416478b13f971cef333c, type: 3}
+  bodyMaterial: {fileID: -5993909935191025681, guid: 2dc526a87c49416478b13f971cef333c, type: 3}
+  damageMaterial: {fileID: 2100000, guid: 036bcdde361806a45acccb91638d8591, type: 2}
 --- !u!114 &7087551461011303493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2528,13 +2519,14 @@ GameObject:
   - component: {fileID: 7087551462013839805}
   - component: {fileID: 7087551462013839806}
   - component: {fileID: 7087551462013839807}
+  - component: {fileID: 5955837379340591451}
   m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7087551462013839808
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2615,6 +2607,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &5955837379340591451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7087551462013839809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b90723b5778de514196da2cc4519cda4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &7275366496613875551
 GameObject:
   m_ObjectHideFlags: 0
@@ -3567,11 +3572,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7000441745291875416, guid: 00c8a9c0fd5c3484a90eb67fa4f25a2d, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7000441745291875416, guid: 00c8a9c0fd5c3484a90eb67fa4f25a2d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00c8a9c0fd5c3484a90eb67fa4f25a2d, type: 3}
