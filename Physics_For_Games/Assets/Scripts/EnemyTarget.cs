@@ -7,6 +7,8 @@ public enum MovementType
 {
     MoveRightToLeft,
     MoveLeftToRight,
+    MoveForwardToBack,
+    MoveBackToForward,
     Idle
 };
 
@@ -52,34 +54,69 @@ public class EnemyTarget : MonoBehaviour
             healthBarCreated = true;
         }
 
-        if (type == MovementType.MoveRightToLeft && !isDead)
+        if (!isDead)
         {
-            if (transform.position.z <= endPos.position.z)
+            switch (type)
             {
-                target = startPos;
-            }
-            else if (transform.position.z >= startPos.position.z )
-            {
-                target = endPos;
-            }
+                case MovementType.MoveLeftToRight:
+                    if (transform.position.z >= endPos.position.z)
+                    {
+                        target = startPos;
+                    }
+                    else if (transform.position.z <= startPos.position.z)
+                    {
+                        target = endPos;
+                    }
 
-            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-            transform.LookAt(target.position);
-        }
+                    transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+                    transform.LookAt(target.position);
+                    break;
 
-        if (type == MovementType.MoveLeftToRight && !isDead)
-        {
-            if (transform.position.z == endPos.position.z)
-            {
-                target = startPos;
-            }
-            else if (transform.position.z == startPos.position.z)
-            {
-                target = endPos;
-            }
+                case MovementType.MoveRightToLeft:
+                    if (transform.position.z <= endPos.position.z)
+                    {
+                        target = startPos;
+                    }
+                    else if (transform.position.z >= startPos.position.z)
+                    {
+                        target = endPos;
+                    }
 
-            transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
-            transform.LookAt(target.position);
+                    transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+                    transform.LookAt(target.position);
+                    break;
+
+                case MovementType.MoveForwardToBack:
+                    if (transform.position.x <= endPos.position.x)
+                    {
+                        target = startPos;
+                    }
+                    else if (transform.position.x >= startPos.position.x)
+                    {
+                        target = endPos;
+                    }
+
+                    transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+                    transform.LookAt(target.position);
+                    break;
+
+                case MovementType.MoveBackToForward:
+                    if (transform.position.x >= endPos.position.x)
+                    {
+                        target = startPos;
+                    }
+                    else if (transform.position.x <= startPos.position.x)
+                    {
+                        target = endPos;
+                    }
+
+                    transform.position = Vector3.MoveTowards(transform.position, target.position, speed * Time.deltaTime);
+                    transform.LookAt(target.position);
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
@@ -107,6 +144,7 @@ public class EnemyTarget : MonoBehaviour
         Destroy(healthCanvas.gameObject);
         GetComponent<Animator>().enabled = false;
         GetComponent<Ragdoll>().RagdollOn = true;
+        Destroy(GetComponent<EnemyTarget>());
         Destroy(gameObject, 4.0f);
     }
 

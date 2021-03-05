@@ -281,13 +281,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  endPos: {x: 0, y: 0, z: 0}
-  endPoint: 0
-  endTarget: {fileID: 0}
   maxHealth: 100
   health: 0
   timeToColor: 0.15
   speed: 10
+  startPos: {fileID: 0}
+  endPos: {fileID: 0}
   healthBar: {fileID: 7087551462055816993}
   healthCanvas: {fileID: 7087551462013839809}
   jointsMaterial: {fileID: -2477152504647978758, guid: 2dc526a87c49416478b13f971cef333c, type: 3}
